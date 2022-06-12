@@ -1,6 +1,6 @@
 CAPI=2:
-name: armleo:armleo_cores:armleo_vip:1.0.0
-description: An RISC-V CPU that supports wider memory operations
+name: armleo:armleo_cores:armleo_verilator_vip:1.0.0
+description: Armleo Verilator Verification IP
 
 filesets:
   verilator_files:
@@ -13,16 +13,11 @@ filesets:
           is_include_file: true
       - verilator_template_main_start.cpp:
           is_include_file: true
-  headers:
-    files:
-      - template.svh:
-          is_include_file: true
-      - assert.svh:
-          is_include_file: true
 targets:
   # The "default" target is special in FuseSoC and used in dependencies.
   # The "&default" is a YAML anchor referenced later.
   default: &default
     filesets:
-      - headers
       - verilator_files
+
+  
