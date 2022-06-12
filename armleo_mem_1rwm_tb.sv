@@ -9,8 +9,8 @@
 `define SYNC_RST
 `define CLK_HALF_PERIOD 1
 
-`include "template.svh"
-`include "access_packed.svh"
+`include "armleo_template.svh"
+`include "armleo_access_packed.svh"
 
 localparam WIDTH = 16;
 localparam DEPTH_LOG2 = 3;

@@ -5,7 +5,11 @@ description: Verilog useful macros
 filesets:
   headers:
     files:
-      - access_packed.svh:
+      - armleo_access_packed.svh:
+          is_include_file: true
+      - armleo_reg_macros.svh:
+          is_include_file: true
+      - armleo_axi_defs.svh:
           is_include_file: true
 targets:
   # The "default" target is special in FuseSoC and used in dependencies.

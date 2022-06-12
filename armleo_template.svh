@@ -49,7 +49,7 @@ end
 `endif
 
 
-`include "assert.svh"
+`include "armleo_assert.svh"
 
 `ifndef SIMRESULT
 	`define SIMRESULT "dump.vcd"
