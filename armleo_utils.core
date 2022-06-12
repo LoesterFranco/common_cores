@@ -1,0 +1,15 @@
+CAPI=2:
+name: armleo:armleo_cores:armleo_utils:1.0.0
+description: Verilog useful macros
+
+filesets:
+  headers:
+    files:
+      - access_packed.svh:
+          is_include_file: true
+targets:
+  # The "default" target is special in FuseSoC and used in dependencies.
+  # The "&default" is a YAML anchor referenced later.
+  default: &default
+    filesets:
+      - headers

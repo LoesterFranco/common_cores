@@ -9,14 +9,15 @@
 `define SYNC_RST
 `define CLK_HALF_PERIOD 1
 
-`include "template.vh"
+`include "template.svh"
+`include "access_packed.svh"
 
 localparam WIDTH = 16;
-localparam ELEMENTS_W = 3;
+localparam DEPTH_LOG2 = 3;
 localparam GRANULITY = 1;
 localparam ENABLES = WIDTH/GRANULITY;
 
-reg [ELEMENTS_W-1:0] address;
+reg [DEPTH_LOG2-1:0] address;
 reg read;
 wire[WIDTH-1:0] readdata;
 reg write;
@@ -24,7 +25,7 @@ reg [WIDTH-1:0] writedata;
 reg [ENABLES-1:0] writeenable;
 
 armleo_mem_1rwm #(
-	.ELEMENTS_W(ELEMENTS_W),
+	.DEPTH_LOG2(DEPTH_LOG2),
 	.WIDTH(WIDTH),
 	.GRANULITY(GRANULITY)
 ) dut (
@@ -35,7 +36,7 @@ armleo_mem_1rwm #(
 
 
 reg read_done = 0;
-reg [ELEMENTS_W-1:0] current_read_addr;
+reg [DEPTH_LOG2-1:0] current_read_addr;
 reg [WIDTH-1:0] current_readdata;
 
 
@@ -53,7 +54,7 @@ endtask
 
 integer m;
 task write_req;
-input [ELEMENTS_W-1:0] addr;
+input [DEPTH_LOG2-1:0] addr;
 input [WIDTH-1:0] dat;
 input [ENABLES-1:0] strb;
 begin
@@ -68,12 +69,12 @@ end
 endtask
 
 
-reg [WIDTH-1:0] mem[2**ELEMENTS_W -1:0];
+reg [WIDTH-1:0] mem[2**DEPTH_LOG2 -1:0];
 
-localparam DEPTH = 2**ELEMENTS_W;
+localparam DEPTH = 2**DEPTH_LOG2;
 
 task read_req;
-input [ELEMENTS_W-1:0] addr;
+input [DEPTH_LOG2-1:0] addr;
 begin
 	read = 1;
 	address = addr;
@@ -88,7 +89,7 @@ endtask
 
 
 
-reg [ELEMENTS_W-1:0] word;
+reg [DEPTH_LOG2-1:0] word;
 reg [WIDTH-1:0] value_to_write;
 reg [ENABLES-1:0] strb;
 
@@ -116,7 +117,7 @@ initial begin
 
 
 	$display("Test write multiple data");
-	for(i = 0; i < 2**ELEMENTS_W; i = i + 1) begin
+	for(i = 0; i < 2**DEPTH_LOG2; i = i + 1) begin
 		word = $random % (2**WIDTH);
 		//strb = $random % (2**(ENABLES));
 		write_req(i, word, {(ENABLES){1'b1}});
@@ -128,7 +129,7 @@ initial begin
 	
 
 	$display("Test read multiple data after modification");
-	for(i = 0; i < 2**ELEMENTS_W; i = i + 1) begin
+	for(i = 0; i < 2**DEPTH_LOG2; i = i + 1) begin
 		read_req(i);
 		next_cycle();
 
