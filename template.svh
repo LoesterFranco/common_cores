@@ -49,7 +49,7 @@ end
 `endif
 
 
-`include "assert.vh"
+`include "assert.svh"
 
 `ifndef SIMRESULT
 	`define SIMRESULT "dump.vcd"

@@ -18,11 +18,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 
 
+`define TOP_TB armleo_mem_1rw_tb
+
 `define TIMEOUT 10000
 `define SYNC_RST
 `define CLK_HALF_PERIOD 1
 
-`include "template.vh"
+`include "template.svh"
 
 localparam WIDTH = 16;
 localparam ELEMENTS_W = 3;
@@ -33,7 +35,7 @@ wire[WIDTH-1:0] readdata;
 reg write;
 reg [WIDTH-1:0] writedata;
 
-armleocpu_mem_1rw #(
+armleo_mem_1rw #(
 	.ELEMENTS_W(ELEMENTS_W),
 	.WIDTH(WIDTH)
 ) dut (
