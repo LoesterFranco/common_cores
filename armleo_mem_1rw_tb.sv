@@ -1,22 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 // 
-// This file is part of ArmleoCPU.
-// ArmleoCPU is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
+// Copyright (C) 2016-2021, Arman Avetisyan
 // 
-// ArmleoCPU is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with ArmleoCPU.  If not, see <https://www.gnu.org/licenses/>.
-// 
-// Copyright (C) 2016-2021, Arman Avetisyan, see COPYING file or LICENSE file
-// SPDX-License-Identifier: GPL-3.0-or-later
-// 
+////////////////////////////////////////////////////////////////////////////////
 
 `define TOP_TB armleo_mem_1rw_tb
 
@@ -27,23 +13,23 @@
 `include "template.svh"
 
 localparam WIDTH = 16;
-localparam ELEMENTS_W = 3;
+localparam DEPTH_LOG2 = 3;
 
-reg [ELEMENTS_W-1:0] address;
+reg [DEPTH_LOG2-1:0] address;
 reg read;
 wire[WIDTH-1:0] readdata;
 reg write;
 reg [WIDTH-1:0] writedata;
 
 armleo_mem_1rw #(
-	.ELEMENTS_W(ELEMENTS_W),
+	.DEPTH_LOG2(DEPTH_LOG2),
 	.WIDTH(WIDTH)
 ) dut (
 	.*
 );
 
 task write_req;
-input [ELEMENTS_W-1:0] addr;
+input [DEPTH_LOG2-1:0] addr;
 input [WIDTH-1:0] dat;
 begin
 	write = 1;
@@ -54,7 +40,7 @@ endtask
 
 
 task read_req;
-input [ELEMENTS_W-1:0] addr;
+input [DEPTH_LOG2-1:0] addr;
 begin
 	read = 1;
 	address = addr;
@@ -69,11 +55,11 @@ begin
 end
 endtask
 
-reg [WIDTH-1:0] mem[2**ELEMENTS_W -1:0];
+reg [WIDTH-1:0] mem[2**DEPTH_LOG2 -1:0];
 
-localparam DEPTH = 2**ELEMENTS_W;
+localparam DEPTH = 2**DEPTH_LOG2;
 
-reg [ELEMENTS_W-1:0] word;
+reg [DEPTH_LOG2-1:0] word;
 
 integer i;
 initial begin
@@ -98,7 +84,7 @@ initial begin
 
 
 	$display("Test write multiple data");
-	for(i = 0; i < 2**ELEMENTS_W; i = i + 1) begin
+	for(i = 0; i < 2**DEPTH_LOG2; i = i + 1) begin
 		mem[i] = $random % (2**WIDTH);
 		write_req(i, mem[i]);
 		next_cycle();
@@ -108,7 +94,7 @@ initial begin
 	end
 
 	$display("Test read multiple data after modification");
-	for(i = 0; i < 2**ELEMENTS_W; i = i + 1) begin
+	for(i = 0; i < 2**DEPTH_LOG2; i = i + 1) begin
 		read_req(i);
 		next_cycle();
 		`assert_equal(readdata, mem[i]);
