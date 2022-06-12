@@ -1,0 +1,46 @@
+CAPI=2:
+name: armleo:armleo_cores:armleo_regfile_2r1w:1.0.0
+description: Register file; 2 read, 1 write; Synchronous, no mask, writing to 0th register ignored, 0th register reset to zero;
+
+filesets:
+  rtl:
+    files:
+      - armleo_regfile_2r1w.sv
+    depend:
+      - armleo:armleo_cores:armleo_utils
+      - armleo:armleo_cores:armleo_mem_1r1w
+    file_type: systemVerilogSource
+  verilator_tb:
+    files:
+      - armleo_regfile_2r1w_tb.cpp
+    depend:
+      - armleo:armleo_cores:armleo_verilator_vip
+      - armleo:armleo_cores:armleo_utils
+      - armleo:armleo_cores:armleo_mem_1r1w
+    file_type: cppSource
+targets:
+  default: &default
+    filesets:
+      - rtl
+    toplevel: armleo_regfile_2r1w
+  lint:
+    <<: *default
+    default_tool : verilator
+    tools:
+      verilator:
+        mode : lint-only
+  synth:
+    <<: *default
+    description: Synthesize using yosys
+    default_tool: yosys
+    tools:
+        yosys:
+          arch: xilinx
+          output_format: edif
+  verilator_tb:
+    default_tool: verilator
+    <<: *default
+    filesets_append : [verilator_tb]
+    tools:
+      verilator:
+        verilator_options : [--trace]

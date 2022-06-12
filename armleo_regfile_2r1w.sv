@@ -13,7 +13,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-module armleo_regfile(
+module armleo_regfile_2r1w(
     input  wire                     clk,
     input  wire                     rst_n,
 
@@ -34,20 +34,20 @@ parameter WIDTH = 32;
 parameter DEPTH_LOG2 = 5;
 
 wire                         write = !rst_n  ? 1 : (rd_write && (rd_addr != 0));
-wire [DEPTH_LOG2-1:0] writeaddress = !rst_n  ? 0 : rd_addr;
-wire [WIDTH-1:0]         writedata = !rst_n  ? 0 : rd_wdata;
+wire [DEPTH_LOG2-1:0] write_addr = !rst_n  ? 0 : rd_addr;
+wire [WIDTH-1:0]         write_data = !rst_n  ? 0 : rd_wdata;
 
 
 armleo_mem_1r1w #(.DEPTH_LOG2(DEPTH_LOG2), .WIDTH(WIDTH)) lane0(
     .clk(clk),
 
-    .readaddress(rs1_addr),
+    .read_addr(rs1_addr),
     .read(rs1_read),
-    .readdata(rs1_rdata),
+    .read_data(rs1_rdata),
 
     .write(write),
-    .writeaddress(writeaddress),
-    .writedata(writedata)
+    .write_addr(write_addr),
+    .write_data(write_data)
 );
 
 
@@ -55,13 +55,13 @@ armleo_mem_1r1w #(.DEPTH_LOG2(DEPTH_LOG2), .WIDTH(WIDTH)) lane0(
 armleo_mem_1r1w #(.DEPTH_LOG2(DEPTH_LOG2), .WIDTH(WIDTH)) lane1(
     .clk(clk),
 
-    .readaddress(rs2_addr),
+    .read_addr(rs2_addr),
     .read(rs2_read),
-    .readdata(rs2_rdata),
+    .read_data(rs2_rdata),
 
     .write(write),
-    .writeaddress(writeaddress),
-    .writedata(writedata)
+    .write_addr(write_addr),
+    .write_data(write_data)
 );
 
 
