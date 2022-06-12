@@ -1,0 +1,28 @@
+CAPI=2:
+name: armleo:armleo_cores:armleo_mem_1r1w:1.0.0
+description: Memory inferrable Block RAM cell 1 sync read-first port, 1 sync write port w/o mask. Read port's output stays stable until next read.
+
+filesets:
+  rtl:
+    files:
+      - armleo_mem_1r1w.sv
+    file_type: systemVerilogSource
+targets:
+  default: &default
+    filesets:
+      - rtl
+    toplevel: armleo_mem_1r1w
+  lint:
+    <<: *default
+    default_tool : verilator
+    tools:
+      verilator:
+        mode : lint-only
+  synth:
+    <<: *default
+    description: Synthesize using yosys
+    default_tool: yosys
+    tools:
+        yosys:
+          arch: xilinx
+          output_format: edif
