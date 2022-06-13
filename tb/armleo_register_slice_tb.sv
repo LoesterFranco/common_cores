@@ -128,9 +128,11 @@ initial begin
 		assert(passthrough_in_ready == passthrough_out_ready);
 	end
 
-	@(negedge clk)
-	@(negedge clk)
-	$finish;
+	@(negedge clk);
+	@(negedge clk);
+	rst_n = 0;
+	
+	`assert_finish;
 end
 
 
