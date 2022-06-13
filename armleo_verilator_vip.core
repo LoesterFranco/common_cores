@@ -5,13 +5,13 @@ description: Armleo Verilator Verification IP
 filesets:
   verilator_files:
     files:
-      - random_utils.cpp:
+      - verilator_cpp_template/random_utils.cpp:
           is_include_file: true
-      - verilator_template_footer.cpp:
+      - verilator_cpp_template/verilator_template_footer.cpp:
           is_include_file: true
-      - verilator_template_header.cpp:
+      - verilator_cpp_template/verilator_template_header.cpp:
           is_include_file: true
-      - verilator_template_main_start.cpp:
+      - verilator_cpp_template/verilator_template_main_start.cpp:
           is_include_file: true
 targets:
   # The "default" target is special in FuseSoC and used in dependencies.

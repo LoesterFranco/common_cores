@@ -5,11 +5,11 @@ description: Memory inferrable Block RAM cell 1 sync read-first port, 1 sync wri
 filesets:
   rtl:
     files:
-      - armleo_mem_1rw.sv
+      - rtl/armleo_mem_1rw.sv
     file_type: systemVerilogSource
   tb:
     files:
-      - armleo_mem_1rw_tb.sv
+      - tb/armleo_mem_1rw_tb.sv
     depend:
       - armleo:armleo_cores:armleo_iverilog_vip
     file_type: systemVerilogSource

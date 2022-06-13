@@ -5,9 +5,9 @@ description: Icarus Verilog related Verification IP
 filesets:
   headers:
     files:
-      - armleo_template.svh:
+      - headers/armleo_template.svh:
           is_include_file: true
-      - armleo_assert.svh:
+      - headers/armleo_assert.svh:
           is_include_file: true
 targets:
   # The "default" target is special in FuseSoC and used in dependencies.
