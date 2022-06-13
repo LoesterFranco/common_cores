@@ -31,6 +31,15 @@ initial begin
 	@(negedge clk)
 	`assert_equal(grant, 0)
 
+    $display("Test case: Between two signals the LSB should be selected");
+    request[2] = 1;
+    request[3] = 1;
+    #1
+    `assert_equal(grant, 1 << 2)
+    @(negedge clk);
+
+    `assert_equal(grant, 1 << 3)
+
 	$display("Test case: Request on any signal should result in grant");
     for(i = 0; i < WIDTH; i = i + 1) begin
         request = 0;

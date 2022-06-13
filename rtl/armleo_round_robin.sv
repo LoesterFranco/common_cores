@@ -59,7 +59,7 @@ always_comb begin
     end
 
     // Rotate the grants back, so we can assign the outputs
-    grant = {rotated_grant, rotated_grant} << rotation;
+    grant = ({rotated_grant, rotated_grant} << rotation) >> WIDTH;
 end
 
 endmodule
