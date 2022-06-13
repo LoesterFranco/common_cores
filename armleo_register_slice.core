@@ -1,0 +1,49 @@
+CAPI=2:
+name: armleo:armleo_cores:armleo_register_slice:1.0.0
+description: Register slice
+
+filesets:
+  rtl:
+    files:
+      - rtl/armleo_register_slice.sv
+    depend:
+      - armleo:armleo_cores:armleo_utils
+    file_type: systemVerilogSource
+  tb:
+    files:
+      - tb/armleo_register_slice_tb.sv
+    depend:
+      - armleo:armleo_cores:armleo_iverilog_vip
+      - armleo:armleo_cores:armleo_utils
+    file_type: systemVerilogSource
+targets:
+  default: &default
+    filesets:
+      - rtl
+    toplevel: armleo_register_slice
+  lint:
+    <<: *default
+    default_tool : verilator
+    tools:
+      verilator:
+        mode : lint-only
+  sim:
+    # Copy all key/value pairs from the "default" target.
+    <<: *default
+    description: Simulate the design
+    default_tool: icarus
+    filesets_append:
+      - tb
+    toplevel: armleo_register_slice_tb
+    tools:
+      icarus:
+        iverilog_options:
+          - -g2012 # Use SystemVerilog-2012
+  synth:
+    <<: *default
+    description: Synthesize using yosys
+    default_tool: yosys
+    tools:
+        yosys:
+          arch: xilinx
+          output_format: edif

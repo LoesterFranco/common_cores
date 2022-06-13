@@ -8,7 +8,7 @@
 //          
 ////////////////////////////////////////////////////////////////////////////////
 
-module armleocpu_register_slice  (
+module armleo_register_slice  (
     clk, rst_n,
     in_valid, in_data, in_ready,
     out_valid, out_data, out_ready
@@ -101,5 +101,4 @@ endgenerate
 
 endmodule
 
-`include "armleocpu_undef.vh"
 

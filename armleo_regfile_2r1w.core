@@ -12,7 +12,7 @@ filesets:
     file_type: systemVerilogSource
   verilator_tb:
     files:
-      - tb/armleo_regfile_2r1w_tb.cpp
+      - verilator_tb/armleo_regfile_2r1w_tb.cpp
     depend:
       - armleo:armleo_cores:armleo_verilator_vip
       - armleo:armleo_cores:armleo_utils
