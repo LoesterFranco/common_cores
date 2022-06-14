@@ -9,6 +9,7 @@ filesets:
           is_include_file: true
       - headers/armleo_assert.svh:
           is_include_file: true
+    file_type: systemVerilogSource
 targets:
   # The "default" target is special in FuseSoC and used in dependencies.
   # The "&default" is a YAML anchor referenced later.
