@@ -9,15 +9,28 @@
 `define AXI_RESP_SLVERR (2'b10)
 `define AXI_RESP_DECERR (2'b11)
 
-`define AXI_BASE_MODULE_IO_NAMELIST(prefix) \
+`define AXI_BASE_WRITE_MODULE_IO_NAMELIST(prefix) \
     ``prefix``awvalid, ``prefix``awready, ``prefix``awaddr, ``prefix``awlen, ``prefix``awburst, ``prefix``awsize, ``prefix``awid, \
     ``prefix``wvalid, ``prefix``wready, ``prefix``wdata, ``prefix``wstrb, ``prefix``wlast, \
-    ``prefix``bvalid, ``prefix``bready, ``prefix``bresp, ``prefix``bid, \
+    ``prefix``bvalid, ``prefix``bready, ``prefix``bresp, ``prefix``bid
+
+`define AXI_BASE_READ_MODULE_IO_NAMELIST(prefix) \
     ``prefix``arvalid, ``prefix``arready, ``prefix``araddr, ``prefix``arlen, ``prefix``arsize, ``prefix``arburst, ``prefix``arid, \
     ``prefix``rvalid, ``prefix``rready, ``prefix``rresp, ``prefix``rlast, ``prefix``rdata, ``prefix``rid
 
-`define AXI_FULL_MODULE_IO_NAMELIST(prefix) `AXI_BASE_MODULE_IO_NAMELIST(prefix), \
-    ``prefix``awprot, ``prefix``arprot, ``prefix``awlock, ``prefix``arlock
+
+`define AXI_BASE_MODULE_IO_NAMELIST(prefix) `AXI_BASE_WRITE_MODULE_IO_NAMELIST(prefix), `AXI_BASE_READ_MODULE_IO_NAMELIST(prefix)
+
+
+
+`define AXI_FULL_READ_MODULE_IO_NAMELIST(prefix) `AXI_BASE_READ_MODULE_IO_NAMELIST(prefix), \
+    ``prefix``arprot, ``prefix``arlock
+
+`define AXI_FULL_WRITE_MODULE_IO_NAMELIST(prefix) `AXI_BASE_WRITE_MODULE_IO_NAMELIST(prefix), \
+    ``prefix``awprot, ``prefix``awlock
+
+`define AXI_FULL_MODULE_IO_NAMELIST(prefix) `AXI_FULL_READ_MODULE_IO_NAMELIST(prefix), `AXI_FULL_WRITE_MODULE_IO_NAMELIST(prefix)
+
 
 `define CONNECT_AXI_BUS(left, right) \
 .``left``awvalid(``right``awvalid), \

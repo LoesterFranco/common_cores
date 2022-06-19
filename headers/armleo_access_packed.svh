@@ -1,1 +1,1 @@
-`define ACCESS_PACKED(idx, len) len*idx +: len
+`define ACCESS_PACKED(idx, len) (len)*(idx) +: len
