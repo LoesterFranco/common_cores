@@ -7,7 +7,7 @@
 
 
 module armleo_round_robin(
-    clk, rst_n, request, grant
+    clk, rst_n, request, grant, grant_idx
 );
 
 input logic clk;
@@ -27,6 +27,7 @@ logic [WIDTH_CLOG2-1:0]     rotation_nxt; // Highest priority request state; Fli
 logic [WIDTH-1:0]           rotated_req; // Rotated request
 logic [WIDTH-1:0]           rotated_grant; // rotated grants; Priority decreases on the bit number increasing
 output logic [WIDTH-1:0]    grant; // unrotated decision
+output logic [WIDTH_CLOG2-1:0] grant_idx;
 
 logic found_priority;
 
@@ -60,6 +61,13 @@ always_comb begin
 
     // Rotate the grants back, so we can assign the outputs
     grant = ({rotated_grant, rotated_grant} << rotation) >> WIDTH;
+
+    grant_idx = 0;
+    for (int i = 0; i < WIDTH; i++) begin
+        if (grant[i]) begin
+            grant_idx = i[WIDTH_CLOG2-1:0];
+        end
+    end
 end
 
 endmodule

@@ -109,7 +109,7 @@
 .``left``rlast(``right``rlast)
 
 
-`define AXI_FULL_SIGNALS(prefix, addr_width, data_width, id_width) \
+`define AXI_FULL_WRITE_SIGNALS(prefix, addr_width, data_width, id_width) \
     logic           ``prefix``awvalid; \
     logic           ``prefix``awready; \
     logic  [``addr_width``-1:0] \
@@ -136,7 +136,8 @@
     logic[1:0]      ``prefix``bresp; \
     logic[``id_width``-1:0] \
                     ``prefix``bid; \
-    \
+
+`define AXI_FULL_READ_SIGNALS(prefix, addr_width, data_width, id_width) \
     logic           ``prefix``arvalid; \
     logic           ``prefix``arready; \
     logic   [``addr_width``-1:0] \
@@ -158,6 +159,10 @@
                     ``prefix``rdata; \
     logic [``id_width``-1:0] \
                     ``prefix``rid;
+
+`define AXI_FULL_SIGNALS(prefix, addr_width, data_width, id_width) \
+    `AXI_FULL_READ_SIGNALS(prefix, addr_width, data_width, id_width)\
+    `AXI_FULL_WRITE_SIGNALS(prefix, addr_width, data_width, id_width)
 
 
 `define AXI_FULL_IO_CLIENT(prefix, addr_width, data_width, id_width) \
