@@ -216,7 +216,7 @@
                         ``prefix``rid;
 
 
-`define AXI_FULL_IO_HOST(prefix, addr_width, data_width, id_width) \
+`define AXI_FULL_WRITE_IO_HOST(prefix, addr_width, data_width, id_width) \
     output logic        ``prefix``awvalid; \
     input wire          ``prefix``awready; \
     output logic  [``addr_width``-1:0] \
@@ -243,7 +243,9 @@
     input wire [1:0]    ``prefix``bresp; \
     input wire [``id_width``-1:0] \
                         ``prefix``bid; \
-    \
+
+
+`define AXI_FULL_READ_IO_HOST(prefix, addr_width, data_width, id_width) \
     output logic        ``prefix``arvalid; \
     input wire          ``prefix``arready; \
     output logic   [``addr_width``-1:0] \
@@ -266,3 +268,7 @@
     input wire  [``id_width``-1:0] \
                         ``prefix``rid;
 
+
+`define AXI_FULL_IO_HOST(prefix, addr_width, data_width, id_width) \
+    `AXI_FULL_READ_IO_HOST(prefix, addr_width, data_width, id_width) \
+    `AXI_FULL_WRITE_IO_HOST(prefix, addr_width, data_width, id_width)
