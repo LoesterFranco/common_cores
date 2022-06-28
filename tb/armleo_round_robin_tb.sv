@@ -15,9 +15,12 @@
 
 
 localparam WIDTH = 4;
+localparam WIDTH_CLOG2 = $clog2(WIDTH);
 
+logic ack;
 logic [WIDTH-1:0] request;
 logic [WIDTH-1:0] grant;
+logic [WIDTH_CLOG2-1:0] grant_idx;
 
 armleo_round_robin #(.WIDTH(WIDTH)) dut (
     .*
@@ -34,6 +37,7 @@ initial begin
     $display("Test case: Between two signals the LSB should be selected");
     request[2] = 1;
     request[3] = 1;
+    ack = 1;
     #1
     `assert_equal(grant, 1 << 2)
     @(negedge clk);

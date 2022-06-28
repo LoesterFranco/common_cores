@@ -7,7 +7,7 @@
 
 
 module armleo_round_robin(
-    clk, rst_n, request, grant, grant_idx
+    clk, rst_n, request, grant, ack, grant_idx
 );
 
 input logic clk;
@@ -21,6 +21,7 @@ localparam WIDTH_CLOG2 = $clog2(WIDTH);
 // -> rotated_grant ==  priority arbitrage
 // -> grant == rotate back to generate the grant signal
 
+input logic                 ack;     // The requester accepted our decision
 input logic [WIDTH-1:0]     request;
 logic [WIDTH_CLOG2-1:0]     rotation; // Highest priority request state; Flip flop
 logic [WIDTH_CLOG2-1:0]     rotation_nxt; // Highest priority request state; Flip flop's D Input
@@ -36,7 +37,9 @@ always_ff @(posedge clk) begin
     if(!rst_n) begin
         rotation <= 0;
     end else begin
-        rotation <= rotation_nxt;
+        if(ack) begin
+            rotation <= rotation_nxt;
+        end
     end
 end
 
