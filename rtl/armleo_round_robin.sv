@@ -57,7 +57,7 @@ always_comb begin
     for (i = 0; i < WIDTH; i = i + 1) begin
         if(!found_priority && rotated_req[i]) begin
             rotated_grant[i] = 1;
-            rotation_nxt = (i + 1) % WIDTH;
+            rotation_nxt = (rotation + i + 1) % WIDTH;
             found_priority = 1;
         end
     end
